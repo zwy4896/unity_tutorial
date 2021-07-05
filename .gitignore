@@ -1,0 +1,17 @@
+# folders
+.vscode/
+Materials/
+Scenes/
+Library/
+Logs/
+obj/
+Packages/
+ProjectSettings/
+Temp/
+UserSettings/
+
+# files
+*.meta
+*.prefab
+*.sln
+*.csproj

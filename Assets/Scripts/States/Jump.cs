@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace Tutorial
 {
-    [CreateAssetMenu(fileName ="newState", menuName ="Tutorial/AbilityData/Landing")]
-    public class Landing : StateData
+    [CreateAssetMenu(fileName ="newState", menuName ="Tutorial/AbilityData/Jump")]
+    public class Jump : StateData
     {
+        public float jumpForce;
         public override void OnEnter(CharacterState characterState, Animator animator, AnimatorStateInfo StateInfo)
         {
-            animator.SetBool(TransitionParameter.Jump.ToString(), false);
+            characterState.GetCharacterControl(animator).RIGID_BODY.AddForce(Vector3.up * jumpForce);
         }
         public override void UpdateAbility(CharacterState characterState, Animator animator, AnimatorStateInfo stateInfo)
         {
@@ -19,4 +20,5 @@ namespace Tutorial
         {
         }
     }
+
 }

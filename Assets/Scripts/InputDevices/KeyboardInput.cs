@@ -26,6 +26,14 @@ namespace Tutorial
                 VirtualInputManager.Instance.moveLeft = false;
             }
 
+            if(Input.GetKey(KeyCode.Space))
+            {
+                VirtualInputManager.Instance.jump = true;
+            }
+            else{
+                VirtualInputManager.Instance.jump = false;
+            }
+
         }
     }
 

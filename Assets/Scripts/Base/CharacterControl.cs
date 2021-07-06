@@ -22,6 +22,9 @@ namespace Tutorial
         public List<GameObject> bottomSpheres = new List<GameObject>();
         public List<GameObject> frontSpheres = new List<GameObject>();
         private Rigidbody rigid;
+
+        public float gravityMultiplier;
+        public float pullMultiplier;
         public Rigidbody RIGID_BODY
         {
             get
@@ -63,7 +66,17 @@ namespace Tutorial
             float verSec = (bottomFront.transform.position - topFront.transform.position).magnitude / 10f;
             CreateMidSpheres(bottomFront, this.transform.up , verSec, 9, frontSpheres);
         }
-
+        public void FixedUpdate()
+        {
+            if(RIGID_BODY.velocity.y < 0f)
+            {
+                RIGID_BODY.velocity -= (Vector3.up * gravityMultiplier);
+            }
+            if(RIGID_BODY.velocity.y > 0f && !jump)
+            {
+                RIGID_BODY.velocity -= (Vector3.up * pullMultiplier);
+            }
+        }
         public void CreateMidSpheres(GameObject start, Vector3 dir, float sec, int interations, List<GameObject> spheresList)
         {
             for (int i = 0; i < interations; i++)

@@ -9,6 +9,7 @@ namespace Tutorial
     {
         public override void OnEnter(CharacterState characterState, Animator animator, AnimatorStateInfo StateInfo)
         {
+            animator.SetBool(TransitionParameter.Jump.ToString(), false);
         }
         public override void UpdateAbility(CharacterState characterState, Animator animator, AnimatorStateInfo stateInfo)
         {

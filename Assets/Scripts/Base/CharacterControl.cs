@@ -20,6 +20,7 @@ namespace Tutorial
         public bool jump;
         public GameObject ColliderEdgePrefab;
         public List<GameObject> bottomSpheres = new List<GameObject>();
+        public List<GameObject> frontSpheres = new List<GameObject>();
         private Rigidbody rigid;
         public Rigidbody RIGID_BODY
         {
@@ -44,21 +45,36 @@ namespace Tutorial
 
             GameObject bottomFront = CreateEdgeSphere(new Vector3(0f, bottom, front));
             GameObject bottomBack = CreateEdgeSphere(new Vector3(0f, bottom, back));
+            GameObject topFront = CreateEdgeSphere(new Vector3(0f, top, front));
 
             bottomFront.transform.parent = this.transform;
             bottomBack.transform.parent = this.transform;
+            topFront.transform.parent = this.transform;
 
             bottomSpheres.Add(bottomBack);
             bottomSpheres.Add(bottomFront);
 
-            float sec = (bottomFront.transform.position - bottomBack.transform.position).magnitude / 5f;
-            for (int i = 0; i < 5; ++i)
+            frontSpheres.Add(bottomFront);
+            frontSpheres.Add(topFront);
+
+            float horSec = (bottomFront.transform.position - bottomBack.transform.position).magnitude / 5f;
+            CreateMidSpheres(bottomFront, -this.transform.forward , horSec, 4, bottomSpheres);
+
+            float verSec = (bottomFront.transform.position - topFront.transform.position).magnitude / 10f;
+            CreateMidSpheres(bottomFront, this.transform.up , verSec, 9, frontSpheres);
+        }
+
+        public void CreateMidSpheres(GameObject start, Vector3 dir, float sec, int interations, List<GameObject> spheresList)
+        {
+            for (int i = 0; i < interations; i++)
             {
-                Vector3 pos = bottomBack.transform.position + (Vector3.forward * sec * (i+1));
+                Vector3 pos = start.transform.position + (dir * sec * (i+1));
+
                 GameObject newObj = CreateEdgeSphere(pos);
                 newObj.transform.parent = this.transform;
-                bottomSpheres.Add(newObj);
+                spheresList.Add(newObj);
             }
+
         }
 
         public GameObject CreateEdgeSphere(Vector3 pos)

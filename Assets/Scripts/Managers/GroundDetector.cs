@@ -35,20 +35,24 @@ namespace Tutorial
 
         bool IsGrounded(CharacterControl characterControl)
         {
-            if(characterControl.RIGID_BODY.velocity.y > -0.01f && characterControl.RIGID_BODY.velocity.y <= 0f)
+            if(characterControl.RIGID_BODY.velocity.y > -0.001f && characterControl.RIGID_BODY.velocity.y <= 0f)
             {
                 return true;
             }
 
-            foreach(GameObject o in characterControl.bottomSpheres)
+            if(characterControl.RIGID_BODY.velocity.y < 0f)
             {
-                Debug.DrawRay(o.transform.position, -Vector3.up * 0.7f, Color.yellow);
-                RaycastHit hit;
-                if(Physics.Raycast(o.transform.position, -Vector3.up, out hit, distance))
+                foreach(GameObject o in characterControl.bottomSpheres)
                 {
-                    return true;
+                    Debug.DrawRay(o.transform.position, -Vector3.up * 0.7f, Color.yellow);
+                    RaycastHit hit;
+                    if(Physics.Raycast(o.transform.position, -Vector3.up, out hit, distance))
+                    {
+                        return true;
+                    }
                 }
             }
+
             return false;
         }
     }

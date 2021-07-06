@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ec04a2e62e65444a83f440151b8968b, type: 3}
-  m_Name: JumpNormalDetector
+  m_Script: {fileID: 11500000, guid: 8f02192992ab17e4b9bbe4afb30b5f36, type: 3}
+  m_Name: JumpNormal_MoveForward
   m_EditorClassIdentifier: 
-  distance: 0
+  speed: 2

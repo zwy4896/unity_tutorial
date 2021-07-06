@@ -11,6 +11,7 @@ namespace Tutorial
         public override void OnEnter(CharacterState characterState, Animator animator, AnimatorStateInfo StateInfo)
         {
             characterState.GetCharacterControl(animator).RIGID_BODY.AddForce(Vector3.up * jumpForce);
+            animator.SetBool(TransitionParameter.Grounded.ToString(), false);
         }
         public override void UpdateAbility(CharacterState characterState, Animator animator, AnimatorStateInfo stateInfo)
         {

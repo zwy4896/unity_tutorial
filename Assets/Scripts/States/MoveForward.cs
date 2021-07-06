@@ -10,6 +10,7 @@ namespace Tutorial
         public AnimationCurve speedGraph;
         public float speed;
         public float distance;
+        private bool self;
 
         public override void OnEnter(CharacterState characterState, Animator animator, AnimatorStateInfo StateInfo)
         {
@@ -57,10 +58,24 @@ namespace Tutorial
         {
             foreach(GameObject o in characterControl.frontSpheres)
             {
+                self = false;
                 Debug.DrawRay(o.transform.position, characterControl.transform.forward * 0.3f, Color.yellow);
                 RaycastHit hit;
                 if(Physics.Raycast(o.transform.position, characterControl.transform.forward, out hit, distance))
                 {
+                    foreach(Collider c in characterControl.ragdollParts)
+                    {
+                        if(c.gameObject == hit.collider.gameObject)
+                        {
+                            self = true;
+                            break;
+                        }
+                    }
+
+                    if(!self)
+                    {
+                        return true;
+                    }
                     return true;
                 }
             }

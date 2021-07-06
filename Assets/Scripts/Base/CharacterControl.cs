@@ -21,6 +21,7 @@ namespace Tutorial
         public GameObject ColliderEdgePrefab;
         public List<GameObject> bottomSpheres = new List<GameObject>();
         public List<GameObject> frontSpheres = new List<GameObject>();
+        public List<Collider> ragdollParts = new List<Collider>();
         private Rigidbody rigid;
 
         public float gravityMultiplier;
@@ -38,6 +39,47 @@ namespace Tutorial
         }
 
         private void Awake()
+        {
+            SetRagdollParts();
+            SetColliderSpheres();
+        }
+
+        // private IEnumerator Start()
+        // {
+        //     yield return new WaitForSeconds(5f);
+        //     RIGID_BODY.AddForce(200f * Vector3.up);
+        //     yield return new WaitForSeconds(5f);
+        //     TurnOnRagdoll();
+        // }
+        private void SetRagdollParts()
+        {
+            Collider[] colliders = this.gameObject.GetComponentsInChildren<Collider>();
+            foreach(Collider c in colliders)
+            {
+                if(c.gameObject != this.gameObject)
+                {
+                    c.isTrigger = true;
+                    ragdollParts.Add(c);
+                }
+            }
+        }
+
+        public void TurnOnRagdoll()
+        {
+            RIGID_BODY.useGravity = false;
+            RIGID_BODY.velocity = Vector3.zero;
+            this.gameObject.GetComponent<BoxCollider>().enabled = false;
+            animator.enabled = false;
+            animator.avatar = null;
+
+            foreach(Collider c in ragdollParts)
+            {
+                c.isTrigger = false;
+                c.attachedRigidbody.velocity = Vector3.zero;
+            }
+        }
+
+        private void SetColliderSpheres()
         {
             BoxCollider box = GetComponent<BoxCollider>();
 
@@ -65,6 +107,7 @@ namespace Tutorial
 
             float verSec = (bottomFront.transform.position - topFront.transform.position).magnitude / 10f;
             CreateMidSpheres(bottomFront, this.transform.up , verSec, 9, frontSpheres);
+
         }
         public void FixedUpdate()
         {

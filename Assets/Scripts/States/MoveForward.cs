@@ -34,18 +34,18 @@ namespace Tutorial
             }
             if(c.moveRight)
             {
+                c.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 if(!CheckFront(c))
                 {
                     c.transform.Translate(Vector3.forward * speed * speedGraph.Evaluate(stateInfo.normalizedTime) * Time.deltaTime);
-                    c.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 }
             }
             if(c.moveLeft)
             {
+                c.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 if(!CheckFront(c))
                 {
                     c.transform.Translate(Vector3.forward * speed * speedGraph.Evaluate(stateInfo.normalizedTime) * Time.deltaTime);
-                    c.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 }
             }
         }
